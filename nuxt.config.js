@@ -34,6 +34,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/plyr.js', ssr: false }
   ],
   /*
   ** Nuxt.js modules

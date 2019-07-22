@@ -17,6 +17,9 @@
           :key="index"
         ></component>
       </article>
+      <footer class="article-footer">
+        <MoreHighlights />
+      </footer>
     </div>
   </div>
 </template>
@@ -25,6 +28,8 @@
 // import cheerio from 'cheerio'
 import camelCase from 'lodash/camelCase'
 import Brief from '@/components/Brief'
+import CaseStudies from '@/components/CaseStudies'
+import MoreHighlights from '@/components/MoreHighlights'
 
 import TextBlock from '@/components/blocks/Text'
 import ImageBlock from '@/components/blocks/Image'
@@ -35,11 +40,15 @@ import QuoteBlock from '@/components/blocks/Quote'
 import NumberedListBlock from '@/components/blocks/NumberedList'
 import CalloutBlock from '@/components/blocks/Callout'
 import InvisionBlock from '@/components/blocks/Invision'
+import VideoBlock from '@/components/blocks/Video'
+import ColumnListBlock from '@/components/blocks/ColumnList'
 
 
 export default {
   name: 'Work',
   components: {
+    CaseStudies,
+    MoreHighlights,
     Brief,
     TextBlock,
     ImageBlock,
@@ -49,7 +58,9 @@ export default {
     QuoteBlock,
     NumberedListBlock,
     CalloutBlock,
-    InvisionBlock
+    InvisionBlock,
+    VideoBlock,
+    ColumnListBlock
   },
   computed: {
     slug() {
