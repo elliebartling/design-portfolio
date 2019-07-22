@@ -1,3 +1,4 @@
+const path = require('path')
 
 export default {
   mode: 'universal',
@@ -26,6 +27,9 @@ export default {
   css: [
     '@/assets/app.scss'
   ],
+  ignore: [
+    './content/**'
+  ],
   /*
   ** Plugins to load before mounting the App
   */
@@ -39,7 +43,15 @@ export default {
   ],
 
   axios: {
-    debug: true
+    debug: false,
+    proxy: true // Can be also an object with default options
+  },
+
+  proxy: {
+    '/.netlify/functions/': {
+      target: 'http://localhost:9000',
+      pathRewrite: {'^/.netlify/functions/': ''}
+    }
   },
   /*
   ** Build configuration
@@ -56,6 +68,8 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+      config.resolve.alias["vue"] = "vue/dist/vue.common"
+      config.resolve.alias['~content'] = path.resolve('./content/latest/')
     }
   }
 }

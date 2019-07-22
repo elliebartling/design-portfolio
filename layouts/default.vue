@@ -1,10 +1,19 @@
 <template>
   <div>
-    <nuxt />
+    <nav class="navbar">
+      <router-link :to="{ name: 'Home' }">Ellen Marie Bartling</router-link>
+      <div class="social-icons">
+        <img src="@/assets/icons/github.svg" />
+        <img src="@/assets/icons/instagram.svg" />
+        <img src="@/assets/icons/mail.svg" />
+        <img src="@/assets/icons/medium.svg" />
+      </div>
+    </nav>
+    <nuxt class="app" />
   </div>
 </template>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -24,32 +33,37 @@ html {
   margin: 0;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.navbar {
+  padding: 15px;
+  position: fixed;
+  background-color: transparent;
+  top: 0;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  a {
+    color: black;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .social-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    img {
+      margin-right: 18px;
+    }
+  }
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.app {
+  margin-top: 50px;
 }
 </style>

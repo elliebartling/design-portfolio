@@ -1,9 +1,11 @@
-import fetch from 'isomorphic-unfetch'
+// import fetch from 'isomorphic-unfetch'
+import axios from 'axios'
 
 const PAGE_ID = '032ae845-419d-4a38-9365-307e62654799'
 const TOKEN = "a1653cfaa74dc35ff0ea6ca46fc127ddc4033f0b74142c8eccbfccfdfbddb8f74b745e03660153f5b867aef180b3f0922e5826b3fa945d13a9d4a2513aa09a581ecf1ceb9a3edaf9a621e8067aa8"
 
-export default async function handler() {
+export async function handler() {
+  console.log('Running')
   const data = await loadPageChunk({ pageId: PAGE_ID });
   const blocks = values(data.recordMap.block);
 
@@ -20,7 +22,9 @@ export default async function handler() {
       value.type === "header" ||
       value.type === "sub_header"
     ) {
-      sections.push({ title: value.properties.title, children: [] });
+      console.log(value.properties)
+      let title = value.properties.title || 'notitle'
+      sections.push({ title: title, children: [] });
       continue;
     }
 
@@ -65,12 +69,12 @@ export default async function handler() {
 
         // I wonder what `Agd&` is? it seems to be a fixed property
         // name that refers to the value
-        table[
-          props.title[0][0]
-            .toLowerCase()
-            .trim()
-            .replace(/[ -_]+/, "_")
-        ] = props["Agd&"];
+        // table[
+        //   props.title[0][0]
+        //     .toLowerCase()
+        //     .trim()
+        //     .replace(/[ -_]+/, "_")
+        // ] = props["Agd&"];
       }
 
       if (sections.length === 1) {
@@ -87,21 +91,26 @@ export default async function handler() {
     }
   }
 
-  return { sections, meta };
+  return {
+    statusCode: 200,
+    body: JSON.stringify(sections)
+  }
+  // return { sections, meta };
 }
 
 async function rpc(fnName, body = {}) {
-  const res = await fetch(`https://www.notion.so/api/v3/${fnName}`, {
+  const res = await axios({
+    url: `https://www.notion.so/api/v3/${fnName}`,
     method: "POST",
     headers: {
       "content-type": "application/json",
       "cookie": `token_v2=${TOKEN}`
     },
-    body: JSON.stringify(body)
+    data: JSON.stringify(body)
   });
 
-  if (res.ok) {
-    return res.json();
+  if (res.status === 200) {
+    return res.data;
   } else {
     throw new Error(await getError(res));
   }
@@ -114,12 +123,12 @@ async function getError(res) {
 }
 
 function getJSONHeaders(res) {
-  return JSON.stringify(res.headers.raw());
+  return JSON.stringify(res.headers);
 }
 
 function getBodyOrNull(res) {
   try {
-    return res.text();
+    return res.data;
   } catch (err) {
     return null;
   }

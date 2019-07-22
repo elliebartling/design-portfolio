@@ -1,75 +1,72 @@
 <template>
   <div id="home" class="container is-fluid">
-    <nav id="nav" class="container">
-      <div class="social-icons">
-        <img src="@/assets/icons/github.svg" />
-        <img src="@/assets/icons/instagram.svg" />
-        <img src="@/assets/icons/mail.svg" />
-        <img src="@/assets/icons/medium.svg" />
-      </div>
-    </nav>
     <section id="hero" class="container">
       <div class="columns">
-        <div class="column is-6 is-offset-2">
-          <h1 class="title is-spaced">
-            Hello, I'm Ellen. <br/>
-            I'm an experience designer & <br/>
-            engineer in Austin, TX.
-          </h1>
-          <p class="subtitle mono">
-            I’m a systems-thinker by training and a generalist at heart. I help brands use human-centered design & technology to solve big problems and tell great stories.
-          </p>
-        </div>
+        <div class="column is-7 is-offset-2" v-html="body"></div>
       </div>
     </section>
+    <CaseStudies />
+    <!-- <Thoughts /> -->
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import CaseStudies from '~/components/CaseStudies.vue'
+import VRuntimeTemplate from 'v-runtime-template'
+import cheerio from 'cheerio'
 
 export default {
+  name: 'Home',
   components: {
-    Logo
+    CaseStudies,
+    VRuntimeTemplate
+  },
+  computed: {
+    page() {
+      return this.$store.getters.getPostByTitle('pages', 'Home')
+    },
+    body() {
+      const $ = cheerio.load(this.page.body)
+
+      // On this page, all code blocks are Vue Components
+      $('p code').each((i, block) => {
+        let contents = $(block).contents()
+        console.log(contents)
+        $(block).parent().replaceWith(contents)
+      })
+
+      return $('.page-body').html()
+    }
   }
 }
 </script>
 
 <style lang="scss">
 body, html {
-  background: #E1E1E1;
+  background: #FFF;
 }
 
 #home {
   margin-top: 40px;
+  margin-bottom: 40px;
   background: white;
 }
 
 section#hero {
   padding-top: 10rem;
-  padding-bottom: 10rem;
+  padding-bottom: 6rem;
 }
 
-.subtitle {
-  font-size: 14px;
+#home h1 {
+  font-size: 3.5rem; // 36px
+  line-height: 1.1;
+}
+
+#home h1 + p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 16px;
   margin-top: 1rem;
   line-height: 1.4;
+  margin-bottom: 4rem;
 }
-
-
-nav.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
-.social-icons {
-  padding-top: 2rem;
-  display: block;
-  img {
-    margin-right: 12px;
-  }
-}
-
 </style>
