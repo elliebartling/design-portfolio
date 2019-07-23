@@ -4,8 +4,8 @@ export const state = () => ({
   pages: [],
   caseStudies: {},
   caseStudyPosts: [],
-  thoughts: [],
-  // notion: {}
+  thoughts: {},
+  thoughtsPosts: []
 })
 
 export const getters = {
@@ -19,19 +19,14 @@ export const getters = {
 
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
-    const { data } = await app.$axios.get('/.netlify/functions/data')
-    const backup = (await app.$axios.get('/.netlify/functions/notion')).data
-    // const backup = require('../content/cache_migrated.json')
-    // state.notion = backup
+    const { data } = await app.$axios.get('/.netlify/functions/notion')
+    const { collections } = data
 
-    state.caseStudies = find(backup.collections, { title: 'Case Studies' })
+    state.pages = find(collections, { title: 'Pages' }).items
+    state.caseStudies = find(collections, { title: 'Case Studies' })
     state.caseStudyPosts = state.caseStudies.items
-    // state.caseStudies = data.caseStudies
-    // state.thoughts = data.thoughts.filter(post => {
-    //   post.meta.tags.Status === 'Published'
-    // })
-    state.thoughts = data.thoughts
-    state.pages = data.pages
+    state.thoughts = find(collections, { title: 'Thoughts' })
+    state.thoughtsPosts = state.thoughts.items
 
     return data
   }

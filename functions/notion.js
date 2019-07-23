@@ -17,7 +17,6 @@ const instance = axios.create({
 export async function handler(pageId) {
   const { data } = await loadPageChunk(PAGE_ID)
 
-  // console.log(data)
   const blocks = data.recordMap.block
   const collection_views = data.recordMap.collection_view
   const collects = data.recordMap.collection

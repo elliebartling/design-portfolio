@@ -4,7 +4,7 @@
 
 <script>
 import cheerio from 'cheerio'
-// import flattenDeep from 'lodash/flattenDeep' 
+// import flattenDeep from 'lodash/flattenDeep'
 export default {
   name: 'TextBlock',
   props: {
@@ -32,10 +32,12 @@ export default {
   },
   methods: {
     applyFormatting(part) {
-      if (part.length === 1) return part[0]
+      if (part.length === 1) return part[0].replace('/\n/g', '<br />')
 
       let formatArray = part[1]
       let text = part[0]
+      text = text.replace('/\n/g', '<br />')
+      console.log(text)
 
       // Apply formatting arrays to the text
       for (let i = 0; i < formatArray.length; i++) {

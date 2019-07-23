@@ -32,12 +32,18 @@ export default {
     { src: '@/plugins/plyr.js', ssr: false }
   ],
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
   axios: {
     debug: true
   },
-  proxy: proxy,
+  proxy: {
+    '/.netlify': {
+      target: 'http://localhost:9000',
+      pathRewrite: {'^/.netlify/functions': ''}
+    }
+  },
   build: {
     postcss: {
       preset: {

@@ -31,10 +31,11 @@ export default {
   },
   methods: {
     applyFormatting(part) {
-      if (part.length === 1) return part[0]
+      let text = part[0].replace(/\n/g, '<br />')
+      if (part.length === 1) return text
 
       let formatArray = part[1]
-      let text = part[0]
+
 
       // Apply formatting arrays to the text
       for (let i = 0; i < formatArray.length; i++) {

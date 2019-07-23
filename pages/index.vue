@@ -1,9 +1,13 @@
 <template>
   <div id="home" class="container is-fluid">
     <section id="hero" class="container">
-      <div class="columns">
-        <div class="column is-7 is-offset-2" v-html="body"></div>
-      </div>
+      <component
+        v-for="(block, index) in blocks"
+        class="home-block component-block mx-auto"
+        :is="getBlockType(block)"
+        :block="block"
+        :key="index"
+      ></component>
     </section>
     <CaseStudies />
     <!-- <Thoughts /> -->
@@ -12,30 +16,52 @@
 
 <script>
 import CaseStudies from '~/components/CaseStudies.vue'
-import VRuntimeTemplate from 'v-runtime-template'
 import cheerio from 'cheerio'
+import camelCase from 'lodash/camelCase'
+import Brief from '@/components/Brief'
+import MoreHighlights from '@/components/MoreHighlights'
+import TextBlock from '@/components/blocks/Text'
+import ImageBlock from '@/components/blocks/Image'
+import SubHeaderBlock from '@/components/blocks/SubHeader'
+import SubSubHeaderBlock from '@/components/blocks/SubHeader'
+import HeaderBlock from '@/components/blocks/Header'
+import QuoteBlock from '@/components/blocks/Quote'
+import NumberedListBlock from '@/components/blocks/NumberedList'
+import CalloutBlock from '@/components/blocks/Callout'
+import InvisionBlock from '@/components/blocks/Invision'
+import VideoBlock from '@/components/blocks/Video'
+import ColumnListBlock from '@/components/blocks/ColumnList'
+
 
 export default {
   name: 'Home',
   components: {
     CaseStudies,
-    VRuntimeTemplate
+    TextBlock,
+    ImageBlock,
+    SubHeaderBlock,
+    SubSubHeaderBlock,
+    HeaderBlock,
+    QuoteBlock,
+    NumberedListBlock,
+    CalloutBlock,
+    InvisionBlock,
+    VideoBlock,
+    ColumnListBlock
   },
   computed: {
     page() {
       return this.$store.getters.getPostByTitle('pages', 'Home')
     },
-    body() {
-      const $ = cheerio.load(this.page.body)
-
-      // On this page, all code blocks are Vue Components
-      $('p code').each((i, block) => {
-        let contents = $(block).contents()
-        console.log(contents)
-        $(block).parent().replaceWith(contents)
-      })
-
-      return $('.page-body').html()
+    blocks() {
+      return this.page.blocks
+    }
+  },
+  methods: {
+    getBlockType(block) {
+      if (block) {
+        return camelCase(block.type + 'Block')
+      }
     }
   }
 }
@@ -53,7 +79,7 @@ body, html {
 }
 
 section#hero {
-  padding-top: 10rem;
+  padding-top: 6rem;
   padding-bottom: 6rem;
 }
 
@@ -62,11 +88,29 @@ section#hero {
   line-height: 1.1;
 }
 
-#home h1 + p {
+// #home h1 + p {
+//   font-family: 'IBM Plex Mono', monospace;
+//   font-size: 16px;
+//   margin-top: 1rem;
+//   line-height: 1.4;
+//   margin-bottom: 4rem;
+// }
+
+#home .home-block {
+  width: 60%;
+  margin-left: 20%;
+  h2 {
+    font-size: 48px;
+    margin-bottom: 0rem;
+  }
+}
+
+#home .home-block.text.component-block {
+  width: 55%;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 16px;
-  margin-top: 1rem;
-  line-height: 1.4;
+  margin-top: 0rem;
+  line-height: 1.6;
   margin-bottom: 4rem;
 }
 </style>
