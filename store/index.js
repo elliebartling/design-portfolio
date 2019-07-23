@@ -26,7 +26,8 @@ export const actions = {
       console.log(joke)
 
       // const data = await app.$axios.$get('/.netlify/functions/notion')
-      const { data } = await getNotionData()
+      const data = await getNotionData()
+      console.log(data)
       const { collections } = data
 
       state.pages = find(collections, { title: 'Pages' }).items
