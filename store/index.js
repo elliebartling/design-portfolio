@@ -26,11 +26,18 @@ export const actions = {
     if (process.env.USE_PROXY) {
       data = await app.$axios
           .get('/.netlify/functions/notion')
-          .then(res => { console.log(res) })
+          .then(res => {
+            console.log(res)
+            return res.data
+          })
           .catch(err => { console.log(err) })
     } else {
       data = axios.get('./netlify/functions/notion')
-        .catch(err => { console.log(err) })
+      .then(res => {
+        console.log(res)
+        return res.data
+      })
+      .catch(err => { console.log(err) })
     }
 
     const { collections } = data
