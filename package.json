@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "ava",
-    "dev": "nuxt",
+    "dev": "USE_PROXY=true nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
