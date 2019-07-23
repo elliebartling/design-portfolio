@@ -28,12 +28,12 @@ export default {
     debug: true,
     baseURL: '/'
   },
-  proxy: {
-    '/.netlify': {
-      target: 'http://localhost:9000',
-      pathRewrite: { '^/.netlify/functions': '' }
-    }
-  },
+  // proxy: {
+  //   '/.netlify': {
+  //     target: 'http://localhost:9000',
+  //     pathRewrite: { '^/.netlify/functions': '' }
+  //   }
+  // },
   build: {
     postcss: {
       preset: {
