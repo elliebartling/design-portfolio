@@ -51,6 +51,8 @@ export async function handler(pageId) {
                 }
               }
             })
+
+            item.content = null
           }
         }
 

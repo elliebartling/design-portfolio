@@ -88,14 +88,6 @@ section#hero {
   line-height: 1.1;
 }
 
-// #home h1 + p {
-//   font-family: 'IBM Plex Mono', monospace;
-//   font-size: 16px;
-//   margin-top: 1rem;
-//   line-height: 1.4;
-//   margin-bottom: 4rem;
-// }
-
 #home .home-block {
   width: 60%;
   margin-left: 20%;
