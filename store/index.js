@@ -21,25 +21,7 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
 
-    let data
-
-    if (process.env.USE_PROXY) {
-      data = await app.$axios
-          .get('/.netlify/functions/notion')
-          .then(res => {
-            console.log(res)
-            return res.data
-          })
-          .catch(err => { console.log(err) })
-    } else {
-      data = axios.get('./netlify/functions/notion')
-      .then(res => {
-        console.log(res)
-        return res.data
-      })
-      .catch(err => { console.log(err) })
-    }
-
+    const { data } = await axios.get('/.netlify/functions/notion')
     const { collections } = data
 
     state.pages = find(collections, { title: 'Pages' }).items
@@ -48,6 +30,6 @@ export const actions = {
     state.thoughts = find(collections, { title: 'Thoughts' })
     state.thoughtsPosts = state.thoughts.items
 
-    return data
+    return Promise.all(data)
   }
 }
