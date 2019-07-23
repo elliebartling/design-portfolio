@@ -12,11 +12,8 @@ const proxy = process.env.USE_PROXY ? netlifyProxy : false
 
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Ellen Marie Bartling - Experience Designer',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -27,40 +24,19 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,400i,700&display=swap' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
-  css: [
-    '@/assets/app.scss'
-  ],
-  ignore: [
-    './content/**'
-  ],
-  /*
-  ** Plugins to load before mounting the App
-  */
+  loading: { color: '#000' },
+  css: ['@/assets/app.scss'],
+  ignore: ['./content/**'],
   plugins: [
     { src: '@/plugins/plyr.js', ssr: false }
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     '@nuxtjs/axios'
   ],
-
   axios: {
-    debug: false
+    debug: true
   },
-
   proxy: proxy,
-  /*
-  ** Build configuration
-  */
   build: {
     postcss: {
       preset: {
@@ -69,9 +45,6 @@ export default {
         }
       }
     },
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
       config.resolve.alias["vue"] = "vue/dist/vue.common"
       config.resolve.alias['~content'] = path.resolve('./content/latest/')
