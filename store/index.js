@@ -19,7 +19,10 @@ export const getters = {
 
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
-    const { data } = await app.$axios.get('/.netlify/functions/notion')
+    const { data } = await app.$axios
+        .get('/.netlify/functions/notion')
+        .catch(err => { console.log(err) })
+
     const { collections } = data
 
     state.pages = find(collections, { title: 'Pages' }).items
