@@ -21,8 +21,7 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
     try {
-      const { data } = await axios.get('/.netlify/functions/notion')
-      console.log(data)
+      const data = await app.$axios.$get('/.netlify/functions/notion')
       const { collections } = data
 
       state.pages = find(collections, { title: 'Pages' }).items
@@ -31,7 +30,7 @@ export const actions = {
       state.thoughts = find(collections, { title: 'Thoughts' })
       state.thoughtsPosts = state.thoughts.items
 
-      return Promise.all(data)
+      return data
     } catch (e) {
       console.log('Error', e)
     }
