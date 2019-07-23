@@ -1,4 +1,5 @@
 import { find } from 'lodash'
+import axios from 'axios'
 
 export const state = () => ({
   pages: [],
@@ -19,18 +20,26 @@ export const getters = {
 
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
-    const data = await app.$axios
-        .get('/.netlify/functions/notion')
-        .then(res => { console.log(res) })
-        .catch(err => { console.log(err) })
 
-    // const { collections } = data
-    //
-    // state.pages = find(collections, { title: 'Pages' }).items
-    // state.caseStudies = find(collections, { title: 'Case Studies' })
-    // state.caseStudyPosts = state.caseStudies.items
-    // state.thoughts = find(collections, { title: 'Thoughts' })
-    // state.thoughtsPosts = state.thoughts.items
+    let data
+
+    if (process.env.USE_PROXY) {
+      data = await app.$axios
+          .get('/.netlify/functions/notion')
+          .then(res => { console.log(res) })
+          .catch(err => { console.log(err) })
+    } else {
+      data = axios.get('./netlify/functions/notion')
+        .catch(err => { console.log(err) })
+    }
+
+    const { collections } = data
+
+    state.pages = find(collections, { title: 'Pages' }).items
+    state.caseStudies = find(collections, { title: 'Case Studies' })
+    state.caseStudyPosts = state.caseStudies.items
+    state.thoughts = find(collections, { title: 'Thoughts' })
+    state.thoughtsPosts = state.thoughts.items
 
     return data
   }
