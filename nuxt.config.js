@@ -1,16 +1,5 @@
 const path = require('path')
 
-const netlifyProxy = {
-  '/.netlify': {
-    target: 'http://localhost:9000',
-    pathRewrite: {'^/.netlify/functions': ''}
-  }
-}
-
-// const proxy = process.env.USE_PROXY ? netlifyProxy : false
-const proxy = netlifyProxy
-
-
 export default {
   mode: 'universal',
   head: {
@@ -36,12 +25,13 @@ export default {
     '@nuxtjs/proxy'
   ],
   axios: {
-    debug: true
+    debug: true,
+    baseURL: '/'
   },
   proxy: {
     '/.netlify': {
       target: 'http://localhost:9000',
-      pathRewrite: {'^/.netlify/functions': ''}
+      pathRewrite: { '^/.netlify/functions': '' }
     }
   },
   build: {
