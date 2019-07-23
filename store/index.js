@@ -21,6 +21,9 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
     try {
+      const joke = await app.$axios.$get('/.netlify/functions/test')
+      console.log(joke)
+
       const data = await app.$axios.$get('/.netlify/functions/notion')
       const { collections } = data
 
