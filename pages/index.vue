@@ -9,7 +9,7 @@
         :key="index"
       ></component>
     </section>
-    <CaseStudies />
+    <!-- <CaseStudies /> -->
     <!-- <Thoughts /> -->
   </div>
 </template>
