@@ -1,6 +1,6 @@
 import { find } from 'lodash'
 import axios from 'axios'
-import getNotionData from '@/functions/notion.js'
+import { handler } from '@/functions/notion.js'
 
 export const state = () => ({
   pages: [],
@@ -22,21 +22,17 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ dispatch, state }, { app }) {
     try {
-      const joke = await axios.get('http://api.icndb.com/jokes/random')
-      console.log(joke)
-
-      // const data = await app.$axios.$get('/.netlify/functions/notion')
-      const data = await getNotionData()
-      console.log(data)
+      const data = await handler().then(res => JSON.parse(res.body))
       const { collections } = data
+      const pages = find(collections, { title: 'Pages' })
 
-      state.pages = find(collections, { title: 'Pages' }).items
+      state.pages = pages.items
       state.caseStudies = find(collections, { title: 'Case Studies' })
       state.caseStudyPosts = state.caseStudies.items
       state.thoughts = find(collections, { title: 'Thoughts' })
       state.thoughtsPosts = state.thoughts.items
 
-      return [joke, data]
+      return data
     } catch (e) {
       console.log('Error', e)
     }

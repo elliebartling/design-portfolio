@@ -9,7 +9,7 @@
         :key="index"
       ></component>
     </section>
-    <!-- <CaseStudies /> -->
+    <CaseStudies />
     <!-- <Thoughts /> -->
   </div>
 </template>
@@ -51,10 +51,10 @@ export default {
   },
   computed: {
     page() {
-      return this.$store.getters.getPostByTitle('pages', 'Home')
+      return this.$store.getters.getPostBySlug('pages', 'home')
     },
     blocks() {
-      return this.page.blocks
+      return this.page ? this.page.blocks : []
     }
   },
   methods: {
@@ -63,6 +63,9 @@ export default {
         return camelCase(block.type + 'Block')
       }
     }
+  },
+  mounted() {
+    console.log(this.$store.state)
   }
 }
 </script>
