@@ -24,16 +24,16 @@ export const actions = {
       const joke = await app.$axios.$get('/.netlify/functions/test')
       console.log(joke)
 
-      // const data = await app.$axios.$get('/.netlify/functions/notion')
-      // const { collections } = data
-      //
-      // state.pages = find(collections, { title: 'Pages' }).items
-      // state.caseStudies = find(collections, { title: 'Case Studies' })
-      // state.caseStudyPosts = state.caseStudies.items
-      // state.thoughts = find(collections, { title: 'Thoughts' })
-      // state.thoughtsPosts = state.thoughts.items
+      const data = await app.$axios.$get('/.netlify/functions/notion')
+      const { collections } = data
 
-      return joke
+      state.pages = find(collections, { title: 'Pages' }).items
+      state.caseStudies = find(collections, { title: 'Case Studies' })
+      state.caseStudyPosts = state.caseStudies.items
+      state.thoughts = find(collections, { title: 'Thoughts' })
+      state.thoughtsPosts = state.thoughts.items
+
+      return [joke, data]
     } catch (e) {
       console.log('Error', e)
     }
