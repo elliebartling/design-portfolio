@@ -1,2 +1,4 @@
 [build]
   functions = "./api"
+  command = "yarn generate && yarn netlify-lambda build ./functions"
+  publish = "dist"

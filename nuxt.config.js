@@ -1,13 +1,14 @@
 const path = require('path')
 
 const netlifyProxy = {
-  '/.netlify/functions/': {
+  '/.netlify': {
     target: 'http://localhost:9000',
-    pathRewrite: {'^/.netlify/functions/': ''}
+    pathRewrite: {'^/.netlify/functions': ''}
   }
 }
 
-const proxy = process.env.USE_PROXY ? netlifyProxy : false
+// const proxy = process.env.USE_PROXY ? netlifyProxy : false
+const proxy = netlifyProxy
 
 
 export default {
