@@ -96,7 +96,7 @@ section#hero {
   margin-left: 20%;
   h2 {
     font-size: 48px;
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
   }
 }
 

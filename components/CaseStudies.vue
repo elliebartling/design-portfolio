@@ -9,12 +9,16 @@
 
 <script>
 import CaseStudyTile from '@/components/CaseStudyTile'
+import flattenDeep from 'lodash/flattenDeep'
 export default {
   name: 'CaseStudies',
   components: { CaseStudyTile },
   computed: {
     posts() {
-      return this.$store.state.caseStudies.items
+      return this.$store.state.caseStudyPosts.filter(post => {
+        let status = flattenDeep(post.post_meta['OHqA'])[0]
+        return status.includes('Published')
+      })
     }
   },
   methods: {

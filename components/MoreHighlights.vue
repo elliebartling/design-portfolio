@@ -1,6 +1,6 @@
 <template>
   <div id="more-highlights" class="column is-10 is-offset-1">
-    <h3>More Like This</h3>
+    <h3>More:</h3>
     <div class="wrap">
       <h2 class="post-title" v-for="post in posts">
         <router-link :to="`/work/${post.slug}`">
@@ -12,11 +12,15 @@
 </template>
 
 <script>
+import flattenDeep from 'lodash/flattenDeep'
 export default {
   name: 'MoreHighlights',
   computed: {
     posts() {
-      return this.$store.state.caseStudies.items
+      return this.$store.state.caseStudyPosts.filter(post => {
+        let status = flattenDeep(post.post_meta['OHqA'])[0]
+        return status.includes('Published')
+      })
     }
   }
 }
@@ -42,8 +46,8 @@ export default {
 
 h2.post-title {
   font-size: 22px;
-  margin-right: .7rem;
-  margin-left: .7rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
   a {
     color: rgba(black, .4);
   }

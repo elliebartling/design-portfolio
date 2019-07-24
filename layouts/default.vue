@@ -1,12 +1,14 @@
 <template>
   <div>
     <nav class="navbar">
-      <router-link :to="{ name: 'Home' }">Ellen Marie Bartling</router-link>
+      <router-link to="/">Ellen Marie Bartling</router-link>
       <div class="social-icons">
-        <img src="@/assets/icons/github.svg" />
-        <img src="@/assets/icons/instagram.svg" />
-        <img src="@/assets/icons/mail.svg" />
-        <img src="@/assets/icons/medium.svg" />
+        <a class="icon" href="https://github.com/elliebartling">
+          <img src="@/assets/icons/github.svg" />
+        </a>
+        <a class="icon" href="mailto:ellenbartling@gmail.com">
+          <img src="@/assets/icons/mail.svg" />
+        </a>
       </div>
     </nav>
     <nuxt class="app" />
@@ -57,7 +59,7 @@ html {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    img {
+    .icon {
       margin-right: 18px;
     }
   }

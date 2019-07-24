@@ -2,7 +2,7 @@
   <div class="case-study-tile column is-half">
     <img :src="src" />
     <div class="meta">
-      <span v-for="tag in tags">{{ tag }}</span>
+      <span>{{ tags }}</span>
       <!-- <span>{{ tags }}</span> -->
     </div>
     <h2 class="post-title">
@@ -10,11 +10,13 @@
         {{ post.title }}
       </router-link>
     </h2>
+    <p class="post-meta">{{ excerpt }}</p>
   </div>
 </template>
 
 <script>
 import split from 'lodash/split'
+import flattenDeep from 'lodash/flattenDeep'
 export default {
   name: 'CaseStudyTile',
   props: {
@@ -36,23 +38,30 @@ export default {
     },
     tags() {
       if (this.post.post_meta['[-08']) {
-        return split(this.post.post_meta['[-08'][0][0], ',')
+        return split(this.post.post_meta['[-08'][0][0], ',').join(', ')
         // return this.post.post_meta['[-08'][0][0]
       }
+    },
+    excerpt() {
+      return this.post.post_meta['t/6m'] ? flattenDeep(this.post.post_meta['t/6m'])[0] : ''
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.case-study-tile {
+  margin-bottom: 6rem;
+}
+
 h3 {
   font-size: 14px;
   margin-bottom: 2rem;
 }
 
 .post-title {
-  font-size: 26px;
-  line-height: 1.1;
+  font-size: 32px;
+  line-height: 1;
   a {
     color: black;
     &:hover {
@@ -66,8 +75,15 @@ h3 {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
   margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
   line-height: 1.4;
   margin-right: 0.5rem;
+}
+
+.post-meta {
+  font-size: 20px;
+  line-height: 1.4;
+  color: rgba(black, 0.5);
+  margin-top: 0.7rem;
 }
 </style>
