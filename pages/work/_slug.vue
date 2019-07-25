@@ -14,7 +14,7 @@
         </div>
         <component
           v-for="(block, index) in blocks"
-          class="component-block"
+          class="component-block column"
           :is="getBlockType(block)"
           :block="block"
           :index="index"
@@ -106,7 +106,6 @@ export default {
 <style lang="scss">
 .container {
   margin-top: 40px;
-  background: white;
   padding: 10px;
 }
 
@@ -122,7 +121,9 @@ export default {
   display: block;
   font-size: 12px;
   position: relative;
-  left: -18px;
+  @media only screen and (min-width: 700px) {
+    left: -18px;
+  }
   font-weight: 600;
   margin-top: 4rem;
   line-height: 1.4;

@@ -1,5 +1,5 @@
 <template>
-  <div class="text column is-6 is-offset-3" v-html="text"></div>
+  <div class="text is-6 is-offset-3" v-html="text"></div>
 </template>
 
 <script>

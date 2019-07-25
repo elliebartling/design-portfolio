@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-block column is-7 mx-auto">
+  <div class="pdf-block is-7 mx-auto">
     <iframe :style="`height: ${height}px`" :src="src" />
   </div>
 </template>

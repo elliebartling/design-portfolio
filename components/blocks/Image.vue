@@ -1,5 +1,5 @@
 <template>
-  <div class="column is-10 mx-auto image-block">
+  <div class="is-10 mx-auto image-block">
     <img class="image mx-auto" :src="src" :style="`width: ${width}`" />
     <div v-if="text" class="caption column is-7 mx-auto" v-html="text"></div>
   </div>

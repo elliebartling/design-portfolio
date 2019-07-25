@@ -46,6 +46,10 @@ export default {
   padding-bottom: 5rem;
   h3 {
     margin-bottom: 2rem;
+    margin-left: 5%;
+    @media only screen and (min-width: 700px) {
+      margin-left: 0%;
+    }
   }
 }
 </style>

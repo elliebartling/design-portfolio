@@ -1,16 +1,16 @@
 <template>
   <div class="case-study-tile column is-half">
     <img :src="src" />
-    <div class="meta">
+    <div class="meta indent-xs">
       <span>{{ tags }}</span>
       <!-- <span>{{ tags }}</span> -->
     </div>
-    <h2 class="post-title">
+    <h2 class="post-title indent-xs">
       <router-link :to="'work/' + post.slug">
         {{ post.title }}
       </router-link>
     </h2>
-    <p class="post-meta">{{ excerpt }}</p>
+    <p class="post-meta indent-xs">{{ excerpt }}</p>
   </div>
 </template>
 
@@ -52,6 +52,17 @@ export default {
 <style lang="scss" scoped>
 .case-study-tile {
   margin-bottom: 6rem;
+  .indent-xs {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  @media only screen and (min-width: 700px) {
+    .indent-xs {
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+  }
 }
 
 h3 {
