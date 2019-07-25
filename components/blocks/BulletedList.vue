@@ -1,12 +1,12 @@
 <template>
-  <div class="quote column is-6 is-offset-3" v-html="text"></div>
+  <ul class="numbered-list column is-6 is-offset-3" v-html="text"></ul>
 </template>
 
 <script>
 import cheerio from 'cheerio'
-import flattenDeep from 'lodash/flattenDeep'
+
 export default {
-  name: 'QuoteBlock',
+  name: 'BulletedList',
   props: {
     block: {
       type: Object,
@@ -18,25 +18,24 @@ export default {
   computed: {
     text() {
       let { title } = this.block.properties || {}
-      const $ = cheerio.load('<blockquote><span></span></blockquote>')
+      const $ = cheerio.load('<li></li>')
 
       if (title) {
         for (let part of title) {
           let text = this.applyFormatting(part)
-          $('blockquote span').append(text)
+          $('li').append(text)
         }
 
-        return $.html('blockquote')
+        return $.html('li')
       }
     }
   },
   methods: {
     applyFormatting(part) {
-      if (part.length === 1) return part[0].replace('/\n/g', '<br />')
+      if (part.length === 1) return part[0]
 
       let formatArray = part[1]
       let text = part[0]
-      text = text.replace('/\n/g', '<br />')
 
       // Apply formatting arrays to the text
       for (let i = 0; i < formatArray.length; i++) {
@@ -57,29 +56,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.quote {
-  font-size: 28px;
-  line-height: 1.4;
-  margin-bottom: 4rem;
-  margin-top: 4rem;
-  position: relative;
-  border-left: 6px solid #FEC3C4;
-  blockquote {
-    padding-left: 20px;
-  }
-
-  span {
-    display: inline;
-    // background-color: #DCDCDC;
-  }
+<style lang="scss" scoped>
+.numbered-list {
+  font-size: 20px;
+  list-style-type: disc;
+  padding-left: 40px;
+  margin-bottom: 1rem;
 }
-
-// .quote + .text p {
-//   color: rgba(black, .5);
-//   font-size: 14px;
-//   font-family: 'IBM Plex Mono', monospace;
-//   position: relative;
-//   // left: -30px;
-// }
 </style>

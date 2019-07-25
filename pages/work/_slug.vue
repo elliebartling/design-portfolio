@@ -9,11 +9,15 @@
         </div>
       </header>
       <article>
+        <div v-if="tldr" class="tldr-block column is-6 is-offset-3">
+          <span class="tldr">tl;dr:</span>
+        </div>
         <component
           v-for="(block, index) in blocks"
           class="component-block"
           :is="getBlockType(block)"
           :block="block"
+          :index="index"
           :key="index"
         ></component>
       </article>
@@ -38,10 +42,12 @@ import SubSubHeaderBlock from '@/components/blocks/SubHeader'
 import HeaderBlock from '@/components/blocks/Header'
 import QuoteBlock from '@/components/blocks/Quote'
 import NumberedListBlock from '@/components/blocks/NumberedList'
+import BulletedListBlock from '@/components/blocks/BulletedList'
 import CalloutBlock from '@/components/blocks/Callout'
 import InvisionBlock from '@/components/blocks/Invision'
 import VideoBlock from '@/components/blocks/Video'
 import ColumnListBlock from '@/components/blocks/ColumnList'
+import PdfBlock from '@/components/blocks/Pdf'
 
 
 export default {
@@ -57,10 +63,12 @@ export default {
     HeaderBlock,
     QuoteBlock,
     NumberedListBlock,
+    BulletedListBlock,
     CalloutBlock,
     InvisionBlock,
     VideoBlock,
-    ColumnListBlock
+    ColumnListBlock,
+    PdfBlock
   },
   computed: {
     slug() {
@@ -73,6 +81,9 @@ export default {
     blocks() {
       return this.post.blocks
     },
+    tldr() {
+      return this.blocks[0].type === 'text'
+    },
     featuredImage() {
       if (this.post.post_meta['C}:h']) {
         return 'https://www.notion.so/image/' + encodeURIComponent(
@@ -80,43 +91,6 @@ export default {
       } else {
         return ''
       }
-    },
-    body() {
-      // const $ = cheerio.load(this.page.body, {
-      //   withDomLvl1: false,
-      //   decodeEntities: false
-      // })
-      //
-      // $('article p').first().addClass('lede')
-      //
-      // $('p code').each((i, block) => {
-      //   let contents = $(block).text()
-      //   if (contents.includes('Brief')) {
-      //     $(block).parent().replaceWith('<p class="brief"></p>')
-      //   }
-      // })
-      //
-      // const brief = $('article p.brief').nextUntil('article p.brief')
-      //
-      // brief.each((i, block) => {
-      //   console.log($(block).text())
-      //   $(block).addClass('red')
-      // })
-      //
-      // return $.html('article .page-body')
-
-      // return {
-      //   template: '<div>' + $('article').html() + '</div>',
-      //   components: { Brief }
-      // }
-    },
-    header() {
-      // const $ = cheerio.load(this.page.body, {
-      //   withDomLvl1: false,
-      //   decodeEntities: false
-      // })
-      //
-      // return $.html('article header')
     }
   },
   methods: {
@@ -168,12 +142,22 @@ h1.page-title {
   margin-bottom: 1rem;
 }
 
-article .text:first-of-type p {
+.tldr-block + .text p {
   font-size: 28px;
   line-height: 1.3;
   margin-bottom: 3rem;
   font-weight: 400;
   color: rgba(black, .7);
+}
+
+.tldr {
+  font-family: 'IBM Plex Mono', monospace;
+  // text-transform: uppercase;
+  font-weight: 600;
+  // color: #52C8EE;
+  display: block;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .red {

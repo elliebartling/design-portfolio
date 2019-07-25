@@ -84,8 +84,8 @@ export default {
 
 <style lang="scss">
 .image-block {
-  margin-top: 8rem;
-  margin-bottom: 8rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
   .caption {
     margin-top: 2rem;

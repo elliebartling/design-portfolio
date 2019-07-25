@@ -1,12 +1,13 @@
 <template>
-  <div class="invision-block column is-7 mx-auto">
+  <div class="pdf-block column is-7 mx-auto">
     <iframe :style="`height: ${height}px`" :src="src" />
   </div>
 </template>
 
 <script>
+import join from 'lodash/join'
 export default {
-  name: 'InvisionBlock',
+  name: 'PdfBlock',
   props: {
     block: {
       type: Object,
@@ -17,7 +18,17 @@ export default {
   },
   computed: {
     src() {
-      return this.block.properties ? this.block.properties.source[0] : ''
+      const { source } = this.block.properties
+
+      if (source.includes('https')) {
+        return source[0]
+      } else {
+        return join([
+          'https://www.notion.so/image/',
+          encodeURIComponent(source),
+          '?width=1800'
+        ], '')
+      }
     },
     height() {
       return this.block.format ? this.block.format.block_height : ''
@@ -28,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .invision-block {
-  margin: 2rem auto;
+  margin-top: 4rem;
 }
 
 iframe {

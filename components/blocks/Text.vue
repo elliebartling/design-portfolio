@@ -13,6 +13,10 @@ export default {
       default() {
         return {}
       }
+    },
+    index: {
+      type: Number,
+      default: null
     }
   },
   computed: {
@@ -37,7 +41,6 @@ export default {
       let formatArray = part[1]
       let text = part[0]
       text = text.replace('/\n/g', '<br />')
-      console.log(text)
 
       // Apply formatting arrays to the text
       for (let i = 0; i < formatArray.length; i++) {

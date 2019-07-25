@@ -1,6 +1,6 @@
 <template>
   <div id="more-highlights" class="column is-10 is-offset-1">
-    <h3>More:</h3>
+    <h3>Next Up:</h3>
     <div class="wrap">
       <h2 class="post-title" v-for="post in posts">
         <router-link :to="`/work/${post.slug}`">
