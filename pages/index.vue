@@ -55,7 +55,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      resume: 'https://www.dropbox.com/s/74v1y0x2h7v2v6h/EllenBartling-Resume-2018.pdf?dl=0'
+      resume: 'https://www.dropbox.com/s/6dabc3mwczbh9io/ellenbartling.resume.pdf?dl=0'
     }
   },
   components: {
