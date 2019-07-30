@@ -35,7 +35,7 @@ export async function handler(pageId) {
 
           if (!_.isEmpty(value)) {
             item.title = _.flattenDeep(value.properties.title)[0]
-            item.slug = _.kebabCase(item.title)
+            item.slug = _.flattenDeep(value.properties["T6&d"])[0] || _.kebabCase(item.title)
             item.id = value.id
             item.post_meta = value.properties
 
